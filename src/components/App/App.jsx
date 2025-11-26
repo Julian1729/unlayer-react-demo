@@ -18,14 +18,11 @@ function App() {
   const closeHTMLViewer = () => {
     setIsOpenHTMLViewer(false);
   };
-
   const handleSaveDesign = () => {
     const unlayer = emailEditorRef.current?.editor;
 
     unlayer?.exportHtml((data) => {
       const { design, html } = data;
-
-      console.log(typeof design);
 
       setExportedJSON(design);
       setExportedHTML(html);
@@ -33,6 +30,14 @@ function App() {
     });
   };
 
+  const handleLoadSample = (jsonInput) => {
+    const unlayer = emailEditorRef.current?.editor;
+
+    // NOTE: loadDesign expects a JS object not a JSON string
+    unlayer?.loadDesign(JSON.parse(jsonInput));
+  };
+
+  // Store JSON design to localStorage when the design is updated and update last saved timestamp
   const handleDesignUpdated = () => {
     const unlayer = emailEditorRef.current?.editor;
 
@@ -47,12 +52,13 @@ function App() {
     });
   };
 
+  // On app load: create a unique design ID to be used as localStorage key
   useEffect(() => {
-    // create a unique design ID (for localStorage key) when the app loads
     const newDesignId = `design-${Date.now()}`;
     setDesignId(newDesignId);
   }, []);
 
+  // On editor ready: set up design updated event listener
   useEffect(() => {
     if (!isEditorReady) return;
 
@@ -73,7 +79,11 @@ function App() {
         exportedHTML={exportedHTML}
         exportedJSON={exportedJSON}
       />
-      <Sidebar onSaveDesign={handleSaveDesign} lastSavedAt={lastSavedAt} />
+      <Sidebar
+        onSaveDesign={handleSaveDesign}
+        lastSavedAt={lastSavedAt}
+        loadSample={handleLoadSample}
+      />
       <EmailComponent
         emailEditorRef={emailEditorRef}
         editorIsReady={() => setIsEditorReady(true)}

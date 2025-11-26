@@ -39,4 +39,22 @@
     font-size: 14px;
     color: #666;
   }
+
+  &__or {
+    text-align: center;
+    margin: 15px 0;
+    font-size: 14px;
+    color: #333;
+  }
+
+  &__textarea {
+    height: 200px;
+    border: 1px solid #ccc;
+    border-radius: 2px;
+    padding: 10px;
+    box-sizing: border-box;
+    font-family: monospace;
+    font-size: 14px;
+    resize: vertical;
+  }
 }
