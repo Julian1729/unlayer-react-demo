@@ -1,0 +1,35 @@
+.sidebar {
+  display: block;
+  background-color: #f5f5f5;
+  padding: 20px;
+
+  &__heading {
+    margin: 0 0 20px 0;
+    font-size: 26px;
+    line-height: 1.2;
+  }
+
+  &__buttons {
+    display: grid;
+    gap: 10px;
+  }
+
+  &__button {
+    cursor: pointer;
+    appearance: none;
+    border-radius: 2px;
+    border: none;
+    background: #1e52aa;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: 700;
+    color: #fff;
+    padding: 10px 15px;
+    width: 100%;
+    transition: background 0.15s ease;
+
+    &:hover {
+      background: #144a9c;
+    }
+  }
+}
