@@ -1,5 +1,6 @@
 .sidebar {
-  display: block;
+  display: flex;
+  flex-direction: column;
   background-color: #f5f5f5;
   padding: 20px;
 
@@ -31,5 +32,11 @@
     &:hover {
       background: #144a9c;
     }
+  }
+
+  &__save-indicator {
+    margin-top: auto;
+    font-size: 14px;
+    color: #666;
   }
 }

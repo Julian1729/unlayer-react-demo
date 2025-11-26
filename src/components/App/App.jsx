@@ -1,4 +1,5 @@
-import { useEffect, useRef, useState } from "react";
+import { use, useEffect, useRef, useState } from "react";
+import moment from "moment";
 
 import Sidebar from "../Sidebar/Sidebar.jsx";
 import EmailComponent from "../Email/Email.jsx";
@@ -10,6 +11,8 @@ function App() {
   const [isOpenHTMLViewer, setIsOpenHTMLViewer] = useState(false);
   const [exportedHTML, setExportedHTML] = useState("");
   const [isEditorReady, setIsEditorReady] = useState(false);
+  const [designId, setDesignId] = useState(null);
+  const [lastSavedAt, setLastSavedAt] = useState(null);
 
   const closeHTMLViewer = () => {
     setIsOpenHTMLViewer(false);
@@ -27,12 +30,20 @@ function App() {
   };
 
   const handleDesignUpdated = (data) => {
-    // Design is updated by the user
-    var type = data.type; // body, row, content
-    var item = data.item;
-    var changes = data.changes;
-    console.log("design:updated", type, item, changes);
+    const { design } = data;
+
+    // save the updated design to localStorage
+    localStorage.setItem(designId, JSON.stringify(design));
+
+    // set the last saved timestamp
+    setLastSavedAt(moment());
   };
+
+  useEffect(() => {
+    // create a unique design ID (for localStorage key) when the app loads
+    const newDesignId = `design-${Date.now()}`;
+    setDesignId(newDesignId);
+  }, []);
 
   useEffect(() => {
     if (!isEditorReady) return;
@@ -53,7 +64,7 @@ function App() {
         close={closeHTMLViewer}
         exportedHTML={exportedHTML}
       />
-      <Sidebar onSaveDesign={handleSaveDesign} />
+      <Sidebar onSaveDesign={handleSaveDesign} lastSavedAt={lastSavedAt} />
       <EmailComponent
         emailEditorRef={emailEditorRef}
         editorIsReady={() => setIsEditorReady(true)}
