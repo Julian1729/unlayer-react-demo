@@ -10,6 +10,7 @@ function App() {
   const emailEditorRef = useRef(null);
   const [isOpenHTMLViewer, setIsOpenHTMLViewer] = useState(false);
   const [exportedHTML, setExportedHTML] = useState("");
+  const [exportedJSON, setExportedJSON] = useState("");
   const [isEditorReady, setIsEditorReady] = useState(false);
   const [designId, setDesignId] = useState(null);
   const [lastSavedAt, setLastSavedAt] = useState(null);
@@ -24,19 +25,26 @@ function App() {
     unlayer?.exportHtml((data) => {
       const { design, html } = data;
 
+      console.log(typeof design);
+
+      setExportedJSON(design);
       setExportedHTML(html);
       setIsOpenHTMLViewer(true);
     });
   };
 
-  const handleDesignUpdated = (data) => {
-    const { design } = data;
+  const handleDesignUpdated = () => {
+    const unlayer = emailEditorRef.current?.editor;
 
-    // save the updated design to localStorage
-    localStorage.setItem(designId, JSON.stringify(design));
+    unlayer?.exportHtml((data) => {
+      const { design } = data;
 
-    // set the last saved timestamp
-    setLastSavedAt(moment());
+      // save the updated design to localStorage
+      localStorage.setItem(designId, JSON.stringify(design));
+
+      // set the last saved timestamp
+      setLastSavedAt(moment());
+    });
   };
 
   useEffect(() => {
@@ -63,6 +71,7 @@ function App() {
         isOpen={isOpenHTMLViewer}
         close={closeHTMLViewer}
         exportedHTML={exportedHTML}
+        exportedJSON={exportedJSON}
       />
       <Sidebar onSaveDesign={handleSaveDesign} lastSavedAt={lastSavedAt} />
       <EmailComponent
