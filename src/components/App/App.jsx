@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 import Sidebar from "../Sidebar/Sidebar.jsx";
 import EmailComponent from "../Email/Email.jsx";
@@ -9,8 +9,13 @@ function App() {
   const emailEditorRef = useRef(null);
   const [isOpenHTMLViewer, setIsOpenHTMLViewer] = useState(false);
   const [exportedHTML, setExportedHTML] = useState("");
+  const [isEditorReady, setIsEditorReady] = useState(false);
 
-  const exportHtml = () => {
+  const closeHTMLViewer = () => {
+    setIsOpenHTMLViewer(false);
+  };
+
+  const handleSaveDesign = () => {
     const unlayer = emailEditorRef.current?.editor;
 
     unlayer?.exportHtml((data) => {
@@ -21,11 +26,38 @@ function App() {
     });
   };
 
+  const handleDesignUpdated = (data) => {
+    // Design is updated by the user
+    var type = data.type; // body, row, content
+    var item = data.item;
+    var changes = data.changes;
+    console.log("design:updated", type, item, changes);
+  };
+
+  useEffect(() => {
+    if (!isEditorReady) return;
+
+    const unlayer = emailEditorRef.current?.editor;
+
+    unlayer.addEventListener("design:updated", handleDesignUpdated);
+
+    return () => {
+      unlayer.removeEventListener("design:updated", handleDesignUpdated);
+    };
+  }, [isEditorReady]);
+
   return (
     <div className="App">
-      <HTMLViewer isOpen={isOpenHTMLViewer} exportedHTML={exportedHTML} />
-      <Sidebar onExportHtml={exportHtml} />
-      <EmailComponent emailEditorRef={emailEditorRef} />
+      <HTMLViewer
+        isOpen={isOpenHTMLViewer}
+        close={closeHTMLViewer}
+        exportedHTML={exportedHTML}
+      />
+      <Sidebar onSaveDesign={handleSaveDesign} />
+      <EmailComponent
+        emailEditorRef={emailEditorRef}
+        editorIsReady={() => setIsEditorReady(true)}
+      />
     </div>
   );
 }

@@ -47,5 +47,20 @@
     right: 50px;
     background: #fff;
     cursor: pointer;
+
+    &:hover {
+      background: #f0f0f0;
+    }
+  }
+
+  &__close-button {
+    position: absolute;
+    bottom: calc(100% + 5px);
+    left: calc(100% + 5px);
+    padding: 0;
+    border: none;
+    background: transparent;
+    appearance: none;
+    cursor: pointer;
   }
 }

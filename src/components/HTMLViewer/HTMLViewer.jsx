@@ -1,7 +1,7 @@
 import { useEffect, useRef } from "react";
 import "./HtmlViewer.scss";
 
-const HTMLViewer = ({ isOpen, exportedHTML }) => {
+const HTMLViewer = ({ isOpen, close, exportedHTML }) => {
   const textareaRef = useRef(null);
 
   useEffect(() => {
@@ -13,6 +13,29 @@ const HTMLViewer = ({ isOpen, exportedHTML }) => {
   return (
     <div className={`htmlv ${isOpen ? "htmlv--open" : ""}`}>
       <div className="htmlv__inner">
+        {/* Close button */}
+        <button className="htmlv__close-button" onClick={close}>
+          <svg xmlns="http://www.w3.org/2000/svg" width={24} height={24}>
+            <path
+              d="M3 0v5c.004.527.219 1.035.594 1.406L10.188 13l-6.594 6.594c-.375.37-.59.879-.594 1.406v5h4v-4.188l6-6 6 6V26h4v-5a2.004 2.004 0 0 0-.594-1.406L15.813 13l6.593-6.594c.375-.37.59-.879.594-1.406V0h-4v4.188l-6 6-6-6V0Z"
+              style={{
+                stroke: "none",
+                strokeWidth: 1,
+                strokeDasharray: "none",
+                strokeLinecap: "butt",
+                strokeDashoffset: 0,
+                strokeLinejoin: "miter",
+                strokeMiterlimit: 4,
+                fill: "#fff",
+                fillRule: "nonzero",
+                opacity: 1,
+              }}
+              transform="matrix(.77 0 0 .77 1.99 1.99)"
+            />
+          </svg>
+        </button>
+
+        {/* Code Preview */}
         <textarea
           ref={textareaRef}
           className="htmlv__textarea"
