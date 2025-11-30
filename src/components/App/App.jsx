@@ -6,6 +6,8 @@ import EmailComponent from "../Email/Email.jsx";
 import HTMLViewer from "../HTMLViewer/HTMLViewer.jsx";
 import "./App.scss";
 
+import useIsDarkMode from "../../hook/useIsDarkMode.js";
+
 function App() {
   const emailEditorRef = useRef(null);
   const [isOpenHTMLViewer, setIsOpenHTMLViewer] = useState(false);
@@ -14,10 +16,12 @@ function App() {
   const [isEditorReady, setIsEditorReady] = useState(false);
   const [designId, setDesignId] = useState(null);
   const [lastSavedAt, setLastSavedAt] = useState(null);
+  const isDarkMode = useIsDarkMode();
 
   const closeHTMLViewer = () => {
     setIsOpenHTMLViewer(false);
   };
+
   const handleSaveDesign = () => {
     const unlayer = emailEditorRef.current?.editor;
 
@@ -76,23 +80,13 @@ function App() {
     if (!isEditorReady) return;
 
     const unlayer = emailEditorRef.current?.editor;
-    const mediaQuery = window.matchMedia("(prefers-color-scheme: dark)");
 
-    const handleThemePreferenceChange = (event) => {
-      console.dir("theme preference changed", event);
-      if (event.matches) {
-        console.log("dark mode");
-        unlayer.setTheme("modern_dark");
-      } else {
-        console.log("light mode");
-        unlayer.setTheme("modern_light");
-      }
-    };
-
-    mediaQuery.addEventListener("change", handleThemePreferenceChange);
-    return () =>
-      mediaQuery.removeEventListener("change", handleThemePreferenceChange);
-  }, [isEditorReady]);
+    if (isDarkMode) {
+      unlayer.setTheme("modern_dark");
+    } else {
+      unlayer.setTheme("modern_light");
+    }
+  }, [isEditorReady, isDarkMode]);
 
   return (
     <div className="App">
