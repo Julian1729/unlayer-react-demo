@@ -71,6 +71,29 @@ function App() {
     };
   }, [isEditorReady]);
 
+  // On editor ready: set theme based on user's theme preference and listen for changes
+  useEffect(() => {
+    if (!isEditorReady) return;
+
+    const unlayer = emailEditorRef.current?.editor;
+    const mediaQuery = window.matchMedia("(prefers-color-scheme: dark)");
+
+    const handleThemePreferenceChange = (event) => {
+      console.dir("theme preference changed", event);
+      if (event.matches) {
+        console.log("dark mode");
+        unlayer.setTheme("modern_dark");
+      } else {
+        console.log("light mode");
+        unlayer.setTheme("modern_light");
+      }
+    };
+
+    mediaQuery.addEventListener("change", handleThemePreferenceChange);
+    return () =>
+      mediaQuery.removeEventListener("change", handleThemePreferenceChange);
+  }, [isEditorReady]);
+
   return (
     <div className="App">
       <HTMLViewer
