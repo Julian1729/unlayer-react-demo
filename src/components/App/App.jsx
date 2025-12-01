@@ -7,6 +7,7 @@ import HTMLViewer from "../HTMLViewer/HTMLViewer.jsx";
 import "./App.scss";
 
 import useIsDarkMode from "../../hook/useIsDarkMode.js";
+import { customModernDarkBlue, customModernLightBlue } from "../../themes.js";
 
 function App() {
   const emailEditorRef = useRef(null);
@@ -77,14 +78,17 @@ function App() {
 
   // On editor ready: set theme based on user's theme preference and listen for changes
   useEffect(() => {
+    // OPTIMIZE: avoid running on isEditorReady change
     if (!isEditorReady) return;
 
     const unlayer = emailEditorRef.current?.editor;
 
     if (isDarkMode) {
-      unlayer.setTheme("modern_dark");
+      // unlayer.setTheme("modern_dark");
+      unlayer.setTheme(customModernDarkBlue);
     } else {
-      unlayer.setTheme("modern_light");
+      // unlayer.setTheme("modern_light");
+      unlayer.setTheme(customModernLightBlue);
     }
   }, [isEditorReady, isDarkMode]);
 
