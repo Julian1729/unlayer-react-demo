@@ -8,6 +8,7 @@ export default function Sidebar({ onSaveDesign, lastSavedAt, loadSample }) {
 
   const handleLoadSample = () => {
     loadSample(jsonInput);
+    setJsonInput("");
   };
 
   return (

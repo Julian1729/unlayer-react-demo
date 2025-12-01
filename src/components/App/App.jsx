@@ -35,11 +35,17 @@ function App() {
     });
   };
 
+  // Load json from textarea (jsonInput) into the editor
   const handleLoadSample = (jsonInput) => {
     const unlayer = emailEditorRef.current?.editor;
 
     // NOTE: loadDesign expects a JS object not a JSON string
     unlayer?.loadDesign(JSON.parse(jsonInput));
+
+    // clear state from previous design
+    setLastSavedAt(null);
+    setExportedJSON("");
+    setExportedHTML("");
   };
 
   // Store JSON design to localStorage when the design is updated and update last saved timestamp
