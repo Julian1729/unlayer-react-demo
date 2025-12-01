@@ -1,16 +1,46 @@
-# React + Vite
+# Unlayer React Demo
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A React demo application showcasing the Unlayer embedded email editor with custom themes and dark mode support.
 
-Currently, two official plugins are available:
+🔗 **[Live Demo](https://julian1729.github.io/unlayer-react-demo/)**
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## About
 
-## React Compiler
+This project is built as part of the **[Getting Started with Unlayer Tutorial](https://www.notion.so/Getting-Started-with-Unlayer-2bcba675290f80549dd0fa3d8f891cfd?source=copy_link)**.
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## Features
 
-## Expanding the ESLint configuration
+- 📧 Unlayer email editor integration
+- 🎨 Custom light and dark themes
+- 🌓 Automatic dark mode detection
+- 💾 Auto-save to localStorage
+- 📋 HTML export with copy functionality
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+## Getting Started
+
+```bash
+# Install dependencies
+npm install
+
+# Start development server
+npm run dev
+
+# Build for production
+npm run build
+```
+
+## Tech Stack
+
+- React 19
+- Vite
+- Unlayer Email Editor
+- SCSS
+
+## Future Features
+
+- [ ] File download for exported HTML/JSON
+- [ ] Design selector to load saved designs from localStorage
+
+## Learn More
+
+Follow the complete tutorial: [Getting Started with Unlayer](https://www.notion.so/Getting-Started-with-Unlayer-2bcba675290f80549dd0fa3d8f891cfd?source=copy_link)
